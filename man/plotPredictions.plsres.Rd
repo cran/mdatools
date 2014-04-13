@@ -1,0 +1,33 @@
+\name{plotPredictions.plsres}
+\alias{plotPredictions.plsres}
+\title{Predictions plot for PLS results}
+\usage{
+\method{plotPredictions}{plsres}(obj, ny = 1, ncomp = NULL, main = NULL,
+  ...)
+}
+\arguments{
+  \item{obj}{PLS results (object of class \code{plsres})}
+
+  \item{ncomp}{how many components to use (if NULL - user
+  selected optimal value will be used)}
+
+  \item{ny}{number of response variable to make the plot
+  for (if y is multivariate)}
+
+  \item{main}{main plot title}
+
+  \item{...}{other plot parameters (see \code{mdaplot} for
+  details)}
+}
+\description{
+Shows plot with predicted vs. reference (measured) y values
+for selected components.
+}
+\details{
+See examples in help for \code{\link{plsres}} function.
+}
+\seealso{
+\code{\link{plotPredictions.regres}} - prediction plot for
+regression results.
+}
+

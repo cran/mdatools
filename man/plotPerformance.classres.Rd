@@ -1,0 +1,44 @@
+\name{plotPerformance.classres}
+\alias{plotPerformance.classres}
+\title{Performance plot for classification results}
+\usage{
+\method{plotPerformance}{classres}(obj, nc = NULL, param = "all",
+  type = "h", legend = NULL, main = NULL, xlab = "Components",
+  ylab = "", ylim = c(0, 1.1), ...)
+}
+\arguments{
+  \item{obj}{classification results (object of class
+  \code{plsdares}, \code{simcamres}, etc.).}
+
+  \item{nc}{if there are several classes, which class to
+  make the plot for (NULL - summary for all classes).}
+
+  \item{param}{which performance parameter to make the plot
+  for (\code{'sensitivity'}, \code{'specificity'},
+  \code{'misclassified'}, \code{'all'}).}
+
+  \item{type}{type of the plot}
+
+  \item{legend}{vector with legend items}
+
+  \item{main}{main title for the plot}
+
+  \item{xlab}{label for x axis}
+
+  \item{ylab}{label for y axis}
+
+  \item{ylim}{vector with two values - limits for y axis}
+
+  \item{...}{most of the graphical parameters from
+  \code{\link{mdaplot}} function can be used.}
+}
+\description{
+Makes a plot with classification performance parameters vs.
+model complexity (e.g. number of components) for
+classification results.
+}
+\details{
+See examples in description of \code{\link{plsdares}},
+\code{\link{simcamres}}, etc.
+}
+

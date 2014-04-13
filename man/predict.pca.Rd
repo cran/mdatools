@@ -1,0 +1,23 @@
+\name{predict.pca}
+\alias{predict.pca}
+\title{PCA predictions}
+\usage{
+\method{predict}{pca}(object, x, cv = F, ...)
+}
+\arguments{
+  \item{object}{a PCA model (object of class \code{pca})}
+
+  \item{x}{a matrix with data values}
+
+  \item{cv}{logical, are predictions for cross-validation
+  or not}
+
+  \item{...}{other arguments}
+}
+\value{
+PCA results (an object of class \code{pcares})
+}
+\description{
+Applies PCA model to a new data
+}
+

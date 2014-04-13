@@ -1,0 +1,25 @@
+\name{plotXScores.plsres}
+\alias{plotXScores.plsres}
+\title{X scores plot for PLS results}
+\usage{
+\method{plotXScores}{plsres}(obj, comp = c(1, 2), main = NULL, ...)
+}
+\arguments{
+  \item{obj}{PLS results (object of class \code{plsres})}
+
+  \item{comp}{which components to show the plot for (one or
+  vector with several values)}
+
+  \item{main}{main plot title}
+
+  \item{...}{other plot parameters (see \code{mdaplot} for
+  details)}
+}
+\description{
+Shows plot with scores values for PLS decomposition of x
+data.
+}
+\details{
+See examples in help for \code{\link{plsres}} function.
+}
+

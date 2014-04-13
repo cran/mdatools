@@ -1,0 +1,27 @@
+\name{plot.plsres}
+\alias{plot.plsres}
+\title{Overview plot for PLS results}
+\usage{
+\method{plot}{plsres}(x, ncomp = NULL, ny = 1, show.labels = F, ...)
+}
+\arguments{
+  \item{x}{PLS results (object of class \code{plsres})}
+
+  \item{ncomp}{how many components to use (if NULL - user
+  selected optimal value will be used)}
+
+  \item{ny}{which y variable to show the summary for (if
+  NULL, will be shown for all)}
+
+  \item{show.labels}{logical, show or not labels for the
+  plot objects}
+
+  \item{...}{other arguments}
+}
+\description{
+Shows a set of plots for PLS results.
+}
+\details{
+See examples in help for \code{\link{plsres}} function.
+}
+

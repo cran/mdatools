@@ -1,0 +1,23 @@
+\name{prep.autoscale}
+\alias{prep.autoscale}
+\title{Autoscale values}
+\usage{
+prep.autoscale(data, center = T, scale = F)
+}
+\arguments{
+  \item{data}{a matrix with data values}
+
+  \item{center}{a logical value or vector with numbers for
+  centering}
+
+  \item{scale}{a logical value or vector with numbers for
+  weighting}
+}
+\value{
+data matrix with processed values
+}
+\description{
+Autoscale (mean center and standardize) values in columns
+of data matrix.
+}
+

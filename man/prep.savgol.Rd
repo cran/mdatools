@@ -1,0 +1,20 @@
+\name{prep.savgol}
+\alias{prep.savgol}
+\title{Savytzky-Golay filter}
+\usage{
+prep.savgol(data, width = 3, porder = 1, dorder = 0)
+}
+\arguments{
+  \item{data}{a matrix with data values}
+
+  \item{width}{width of the filter window}
+
+  \item{porder}{order of polynomial used for smoothing}
+
+  \item{dorder}{order of derivative to take (0 - no
+  derivative)}
+}
+\description{
+Applies Savytzky-Golay filter to the rows of data matrix
+}
+

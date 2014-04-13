@@ -1,0 +1,29 @@
+\name{plot.pca}
+\alias{plot.pca}
+\title{Model overview plot for PCA}
+\usage{
+\method{plot}{pca}(x, comp = c(1, 2), show.labels = F, show.legend = T,
+  ...)
+}
+\arguments{
+  \item{x}{a PCA model (object of class \code{pca})}
+
+  \item{comp}{vector with two values - number of components
+  to show the scores and loadings plots for}
+
+  \item{show.labels}{logical, show or not labels for the
+  plot objects}
+
+  \item{show.legend}{logical, show or not a legend on the
+  plot}
+
+  \item{...}{other arguments}
+}
+\description{
+Shows a set of plots (scores, loadings, residuals and
+explained variance) for PCA model.
+}
+\details{
+See examples in help for \code{\link{pca}} function.
+}
+

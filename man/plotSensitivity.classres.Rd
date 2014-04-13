@@ -1,0 +1,25 @@
+\name{plotSensitivity.classres}
+\alias{plotSensitivity.classres}
+\title{Sensitivity plot for classification results}
+\usage{
+\method{plotSensitivity}{classres}(obj, nc = NULL, ...)
+}
+\arguments{
+  \item{obj}{classification results (object of class
+  \code{plsdares}, \code{simcamres}, etc.).}
+
+  \item{nc}{if there are several classes, which class to
+  make the plot for (NULL - summary for all classes).}
+
+  \item{...}{most of the graphical parameters from
+  \code{\link{mdaplot}} function can be used.}
+}
+\description{
+Makes a plot with sensitivity values vs. model complexity
+(e.g. number of components) for classification results.
+}
+\details{
+See examples in description of \code{\link{plsdares}},
+\code{\link{simcamres}}, etc.
+}
+

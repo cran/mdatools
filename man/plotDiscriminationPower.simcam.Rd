@@ -1,0 +1,33 @@
+\name{plotDiscriminationPower.simcam}
+\alias{plotDiscriminationPower.simcam}
+\title{Discrimination power plot for SIMCAM model}
+\usage{
+\method{plotDiscriminationPower}{simcam}(obj, nc = c(1, 2), type = "h",
+  main = NULL, xlab = "Variables", ylab = "", ...)
+}
+\arguments{
+  \item{obj}{a SIMCAM model (object of class
+  \code{simcam})}
+
+  \item{nc}{vector with two values - classes (SIMCA models)
+  to show the plot for}
+
+  \item{type}{type of the plot}
+
+  \item{main}{main plot title}
+
+  \item{xlab}{label for x axis}
+
+  \item{ylab}{label for y axis}
+
+  \item{...}{other plot parameters (see \code{mdaplotg} for
+  details)}
+}
+\description{
+Shows a plot with discrimination power of predictors for a
+pair of SIMCA models
+}
+\details{
+See examples in help for \code{\link{simcam}} function.
+}
+

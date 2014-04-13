@@ -1,0 +1,41 @@
+\name{plotLoadings.pca}
+\alias{plotLoadings.pca}
+\title{Loadings plot for PCA}
+\usage{
+\method{plotLoadings}{pca}(obj, comp = c(1, 2), type = NULL,
+  main = "Loadings", xlab = NULL, ylab = NULL, show.labels = T,
+  show.legend = T, show.axes = T, ...)
+}
+\arguments{
+  \item{obj}{a PCA model (object of class \code{pca})}
+
+  \item{comp}{a value or vector with several values -
+  number of components to show the plot for}
+
+  \item{type}{type of the plot ('b', 'l', 'h')}
+
+  \item{main}{main title for the plot}
+
+  \item{xlab}{label for x axis}
+
+  \item{ylab}{label for y axis}
+
+  \item{show.labels}{logical, show or not labels for the
+  plot objects}
+
+  \item{show.legend}{logical, show or not a legend on the
+  plot}
+
+  \item{show.axes}{logical, show or not a axes lines
+  crossing origin (0,0)}
+
+  \item{...}{other plot parameters (see \code{mdaplotg} for
+  details)}
+}
+\description{
+Shows a loadings plot for selected components.
+}
+\details{
+See examples in help for \code{\link{pca}} function.
+}
+

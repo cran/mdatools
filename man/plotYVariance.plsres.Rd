@@ -1,0 +1,22 @@
+\name{plotYVariance.plsres}
+\alias{plotYVariance.plsres}
+\title{Explained Y variance plot for PLS results}
+\usage{
+\method{plotYVariance}{plsres}(obj, main = "Y variance", ...)
+}
+\arguments{
+  \item{obj}{PLS results (object of class \code{plsres})}
+
+  \item{main}{main plot title}
+
+  \item{...}{other plot parameters (see \code{mdaplot} for
+  details)}
+}
+\description{
+Shows plot with explained Y variance vs. number of
+components.
+}
+\details{
+See examples in help for \code{\link{plsres}} function.
+}
+

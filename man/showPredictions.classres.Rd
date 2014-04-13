@@ -1,0 +1,26 @@
+\name{showPredictions.classres}
+\alias{showPredictions.classres}
+\title{Show predicted class values}
+\usage{
+\method{showPredictions}{classres}(obj, ncomp = NULL, ...)
+}
+\arguments{
+  \item{obj}{object with classification results (e.g.
+  \code{plsdares} or \code{simcamres}).}
+
+  \item{ncomp}{number of components to show the predictions
+  for (NULL - use selected for a model).}
+
+  \item{...}{other parameters}
+}
+\description{
+Shows a table with predicted class values for
+classification result.
+}
+\details{
+The function prints a matrix where every column is a class
+and every row is an data object. The matrix has either -1
+(does not belong to the class) or +1 (belongs to the class)
+values.
+}
+

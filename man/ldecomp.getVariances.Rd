@@ -1,0 +1,21 @@
+\name{ldecomp.getVariances}
+\alias{ldecomp.getVariances}
+\title{Explained variance for linear decomposition}
+\usage{
+ldecomp.getVariances(Q2, totvar)
+}
+\arguments{
+  \item{Q2}{Q2 values (squared residuals distance from
+  object to component space).}
+
+  \item{totvar}{Total variance of the original data (after
+  preprocessing).}
+}
+\value{
+Returns a list with two vectors.
+}
+\description{
+Computes explained variance and cumulative explained
+variance for a data decomposition X = TP' + E.
+}
+

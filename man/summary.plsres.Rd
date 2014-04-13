@@ -1,0 +1,22 @@
+\name{summary.plsres}
+\alias{summary.plsres}
+\title{summary method for PLS results object}
+\usage{
+\method{summary}{plsres}(object, ny = NULL, ncomp = NULL, ...)
+}
+\arguments{
+  \item{object}{PLS results (object of class
+  \code{plsres})}
+
+  \item{ncomp}{how many components to use (if NULL - user
+  selected optimal value will be used)}
+
+  \item{ny}{for which response variable show the summary
+  for}
+
+  \item{...}{other arguments}
+}
+\description{
+Shows performance statistics for the results.
+}
+

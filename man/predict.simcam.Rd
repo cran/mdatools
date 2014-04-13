@@ -1,0 +1,30 @@
+\name{predict.simcam}
+\alias{predict.simcam}
+\title{SIMCA multiple classes predictions}
+\usage{
+\method{predict}{simcam}(object, x, c.ref = NULL, cv = F, ...)
+}
+\arguments{
+  \item{object}{a SIMCAM model (object of class
+  \code{simcam})}
+
+  \item{x}{a matrix with x values (predictors)}
+
+  \item{c.ref}{a vector with reference class values}
+
+  \item{cv}{logical, are predictions for cross-validation
+  or not}
+
+  \item{...}{other arguments}
+}
+\value{
+SIMCAM results (an object of class \code{simcamres})
+}
+\description{
+Applies SIMCAM model (SIMCA for multiple classes) to a new
+data set
+}
+\details{
+See examples in help for \code{\link{simcam}} function.
+}
+

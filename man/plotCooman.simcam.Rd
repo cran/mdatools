@@ -1,0 +1,23 @@
+\name{plotCooman.simcam}
+\alias{plotCooman.simcam}
+\title{Cooman's plot for SIMCAM model}
+\usage{
+\method{plotCooman}{simcam}(obj, nc = c(1, 2), ...)
+}
+\arguments{
+  \item{obj}{a SIMCAM model (object of class
+  \code{simcam})}
+
+  \item{nc}{vector with two values - classes (SIMCA models)
+  to show the plot for}
+
+  \item{...}{other plot parameters (see \code{mdaplotg} for
+  details)}
+}
+\description{
+Shows a Cooman's plot for a pair of SIMCA models
+}
+\details{
+See examples in help for \code{\link{simcam}} function.
+}
+
