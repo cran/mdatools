@@ -1,26 +1,128 @@
-## class and methods for SIMCA classification ##
-
+#' SIMCA one-class classification
+#' 
+#' @description
+#' \code{simca} is used to make SIMCA (Soft Independent Modelling of Class Analogies) model for 
+#' one-class classification.
+#' 
+#' @param x
+#' a numerical matrix with data values.
+#' @param classname
+#' short text (up to 20 symbols) with class name.
+#' @param ncomp
+#' maximum number of components to calculate.
+#' @param center
+#' logical, do mean centering of data or not.
+#' @param scale
+#' logical, do sdandardization of data or not.
+#' @param cv
+#' number of segments for random cross-validation (1 for full cross-validation).
+#' @param x.test
+#' a numerical matrix with test data.
+#' @param c.test
+#' a vector with text values (names of classes) of test data objects.
+#' @param alpha
+#' significance level for calculating limit for T2 and Q residuals.
+#' @param method
+#' method to compute principal components.
+#' @param info
+#' text with information about the model.
+#' 
+#' @details 
+#' SIMCA is in fact PCA model with additional functionality, so \code{simca} class inherits most 
+#' of the functionality of \code{\link{pca}} class. 
+#'
+#' @return 
+#' Returns an object of \code{simca} class with following fields:
+#' \item{classname }{a short text with class name.} 
+#' \item{modpower }{a matrix with modelling power of variables.} 
+#' \item{calres }{an object of class \code{\link{simcares}} with classification results for a 
+#' calibration data.} 
+#' \item{testres }{an object of class \code{\link{simcares}} with classification results for a test 
+#' data, if it was provided.} 
+#' \item{cvres }{an object of class \code{\link{simcares}} with classification results for 
+#' cross-validation, if this option was chosen.} 
+#' 
+#' Fields, inherited from \code{\link{pca}} class:
+#' \item{ncomp }{number of components included to the model.} 
+#' \item{ncomp.selected }{selected (optimal) number of components.} 
+#' \item{loadings }{matrix with loading values (nvar x ncomp).} 
+#' \item{eigenvals }{vector with eigenvalues for all existent components.} 
+#' \item{expvar }{vector with explained variance for each component (in percent).} 
+#' \item{cumexpvar }{vector with cumulative explained variance for each component (in percent).} 
+#' \item{T2lim }{statistical limit for T2 distance.} 
+#' \item{Qlim }{statistical limit for Q residuals.} 
+#' \item{info }{information about the model, provided by user when build the model.} 
+#'
+#' @references 
+#' S. Wold, M. Sjostrom. "SIMCA: A method for analyzing chemical data in terms of similarity and 
+#' analogy" in B.R. Kowalski (ed.), Chemometrics Theory and Application, American Chemical Society 
+#' Symposium Series 52, Wash., D.C., American Chemical Society, p. 243-282.
+#' 
+#' @seealso 
+#' Methods for \code{simca} objects:
+#' \tabular{ll}{
+#'  \code{print.simca} \tab shows information about the object.\cr
+#'  \code{summary.simca} \tab shows summary statistics for the model.\cr
+#'  \code{plot.simca} \tab makes an overview of SIMCA model with four plots.\cr
+#'  \code{\link{predict.simca}} \tab applies SIMCA model to a new data.\cr
+#'  \code{\link{plotModellingPower.simca}} \tab shows plot with modelling power of variables.\cr
+#' }
+#' 
+#' Methods, inherited from \code{classmodel} class:
+#' \tabular{ll}{
+#'  \code{\link{plotPredictions.classmodel}} \tab shows plot with predicted values.\cr
+#'  \code{\link{plotSensitivity.classmodel}} \tab shows sensitivity plot.\cr
+#'  \code{\link{plotSpecificity.classmodel}} \tab shows specificity plot.\cr
+#'  \code{\link{plotMisclassified.classmodel}} \tab shows misclassified ratio plot.\cr
+#' }
+#' 
+#' Methods, inherited from \code{\link{pca}} class:
+#' \tabular{ll}{
+#'  \code{\link{selectCompNum.pca}} \tab set number of optimal components in the model\cr
+#'  \code{\link{plotScores.pca}} \tab shows scores plot.\cr
+#'  \code{\link{plotLoadings.pca}} \tab shows loadings plot.\cr
+#'  \code{\link{plotVariance.pca}} \tab shows explained variance plot.\cr
+#'  \code{\link{plotCumVariance.pca}} \tab shows cumulative explained variance plot.\cr
+#'  \code{\link{plotResiduals.pca}} \tab shows Q vs. T2 residuals plot.\cr
+#' }
+#' 
+#' @examples
+#' ## make a SIMCA model for Iris setosa class with full cross-validation
+#' library(mdatools)
+#' 
+#' data = iris[, 1:4]
+#' class = iris[, 5]
+#' 
+#' # take first 20 objects of setosa as calibration set 
+#' se = data[1:20, ]
+#' 
+#' # make SIMCA model and apply to test set
+#' model = simca(se, 'setosa', cv = 1)
+#' model = selectCompNum(model, 1)
+#' 
+#' # show infromation, summary and plot overview
+#' print(model)
+#' summary(model)
+#' plot(model)
+#' 
+#' # show predictions 
+#' par(mfrow = c(2, 1))
+#' plotPredictions(model, show.labels = TRUE)
+#' plotPredictions(model, res = 'calres', ncomp = 2, show.labels = TRUE)
+#' par(mfrow = c(1, 1))
+#' 
+#' # show performance, modelling power and residuals for ncomp = 2
+#' par(mfrow = c(2, 2))
+#' plotSensitivity(model)
+#' plotMisclassified(model)
+#' plotModellingPower(model, ncomp = 2, show.labels = TRUE)
+#' plotResiduals(model, ncomp = 2)
+#' par(mfrow = c(1, 1))
+#'
+#' @export
 simca = function(x, classname, ncomp = 15, center = T, scale = F, cv = NULL, x.test = NULL, 
                  c.test = NULL, alpha = 0.05, method = 'svd', info = '')
 {
-   # Calibrate and validate a SIMCA classification model for one class
-   #
-   # Arguments:
-   #   x: a matrix with data values
-   #   classname: a short text with name of the class
-   #   ncomp: maximum number of components to calculate
-   #   center: logical, mean center the data values or not 
-   #   scale: logical, standardize the data values or not 
-   #   cv: number of segments for random cross-validation (1 - for full CV)
-   #   x.test: a matrix with data values for test set validation
-   #   c.test: a matrix with class values for test set validation
-   #   alpha: a significance level for Q2 residuals
-   #   method: method to find principal component space (only SVD is supported so far)
-   #   info: a text with information about the model
-   #
-   # Returns:
-   #   model: a SIMCA model (object of simca class)
-   
    x = as.matrix(x)
    
    # check if data has missing values
@@ -48,10 +150,10 @@ simca = function(x, classname, ncomp = 15, center = T, scale = F, cv = NULL, x.t
    model$info = info
    model$alpha = alpha
    
-   # calculate and assign limit values for T2 and Q2 residuals
+   # calculate and assign limit values for T2 and Q residuals
    lim = ldecomp.getResLimits(model$eigenvals, nrow(x), model$ncomp.selected, model$alpha)
    model$T2lim = lim$T2lim
-   model$Q2lim = lim$Q2lim   
+   model$Qlim = lim$Qlim   
 
    model$call = match.call()   
    class(model) = c("simca", "classmodel", "pca")
@@ -69,7 +171,6 @@ simca = function(x, classname, ncomp = 15, center = T, scale = F, cv = NULL, x.t
    {
       if (is.null(c.test))
          c.test = rep(classname, nrow(x.test))
-      
       model$testres = predict.simca(model, x.test, c.ref = c.test)
    }
    
@@ -97,7 +198,8 @@ simca = function(x, classname, ncomp = 15, center = T, scale = F, cv = NULL, x.t
 #'
 #' @details
 #' See examples in help for \code{\link{simca}} function.
-#'  
+#' 
+#' @export
 predict.simca = function(object, x, c.ref = NULL, cv = F, ...)
 {
    x = as.matrix(x)
@@ -109,7 +211,7 @@ predict.simca = function(object, x, c.ref = NULL, cv = F, ...)
       colnames(x) = paste('v', 1:ncol(x), sep = '')
    
    pres = predict.pca(object, x, cv)     
-   pres$Q2lim = object$Q2lim
+   pres$Qlim = object$Qlim
    pres$T2lim = object$T2lim
    
    c.pred = simca.classify(object, pres)
@@ -131,7 +233,7 @@ predict.simca = function(object, x, c.ref = NULL, cv = F, ...)
 #' SIMCA classification
 #' 
 #' @description
-#' Make classification based on calculated T2 and Q2 values and corresponding limits
+#' Make classification based on calculated T2 and Q values and corresponding limits
 #' 
 #' @param model
 #' a SIMCA model (object of class \code{simca})
@@ -147,14 +249,13 @@ predict.simca = function(object, x, c.ref = NULL, cv = F, ...)
 simca.classify = function(model, res)
 {
    ncomp = model$ncomp
-   c.pred = array(0, dim = c(nrow(res$Q2), ncomp, 1))
-   dimnames(c.pred) = list(rownames(res$Q2), paste('Comp', 1:ncomp), model$classname)
+   c.pred = array(0, dim = c(nrow(res$Q), ncomp, 1))
+   dimnames(c.pred) = list(rownames(res$Q), paste('Comp', 1:ncomp), model$classname)
    
    for (i in 1:ncomp)
    {
       c.pred[, i, 1] = 
-         (res$T2[, i] - model$T2lim[1, i]) < 0.00000001 & 
-         (res$Q2[, i] - model$Q2lim[1, i]) < 0.00000001
+         res$T2[, i] <= model$T2lim[1, i] & res$Q[, i] <= model$Qlim[1, i]
    }   
    c.pred = c.pred * 2 - 1
   
@@ -184,23 +285,19 @@ simca.crossval = function(model, x, cv, center = T, scale = F)
 {
    ncomp = model$ncomp   
    nobj = nrow(x)
-   nvar = ncol(x)
    
    # get matrix with indices for cv segments
    idx = crossval(nobj, cv)
-   seglen = ncol(idx);
    nseg = nrow(idx);
    nrep = dim(idx)[3]
    
-   Q2 = matrix(0, ncol = ncomp, nrow = nobj)   
+   Q = matrix(0, ncol = ncomp, nrow = nobj)   
    T2 = matrix(0, ncol = ncomp, nrow = nobj)   
-   Q2lim = matrix(0, ncol = ncomp, nrow = 1)   
+   Qlim = matrix(0, ncol = ncomp, nrow = 1)   
    T2lim = matrix(0, ncol = ncomp, nrow = 1)   
    
    c.pred = array(0, dim = c(nobj, ncomp, 1))
    c.ref = matrix(model$classname, ncol = 1, nrow = nobj)
-   
-   
    
    # loop over segments
    for (iRep in 1:nrep)
@@ -217,30 +314,30 @@ simca.crossval = function(model, x, cv, center = T, scale = F)
          
             m = pca.cal(x.cal, ncomp, center, scale)               
             res = predict.pca(m, x.val, cv = T)
-            Q2[ind, ] = Q2[ind, ] + res$Q2
+            Q[ind, ] = Q[ind, ] + res$Q
             T2[ind, ] = T2[ind, ] + res$T2
                         
             lim = ldecomp.getResLimits(m$eigenvals, nrow(x.cal), ncomp, model$alpha)
             T2lim = T2lim + lim$T2lim
-            Q2lim = Q2lim + lim$Q2lim         
+            Qlim = Qlim + lim$Qlim         
          }
       }  
    }
    
-   Q2 = Q2 / nrep;
+   Q = Q / nrep;
    T2 = T2 / nrep;
-   Q2lim = Q2lim / nrep;
+   Qlim = Qlim / nrep;
    T2lim = T2lim / nrep;
-   m = list(Q2lim = Q2lim, T2lim = T2lim, classname = model$classname, ncomp = model$ncomp)
-   r = list(Q2 = Q2, T2 = T2, classname = model$classname)
+   m = list(Qlim = Qlim, T2lim = T2lim, classname = model$classname, ncomp = model$ncomp)
+   r = list(Q = Q, T2 = T2, classname = model$classname)
    
    c.pred = simca.classify(m, r)
    
    
    dimnames(c.pred) = list(rownames(x), colnames(model$loadings), model$classname)
-   rownames(Q2) = rownames(T2) = rownames(c.pred) = rownames(c.ref) = rownames(x)
-   colnames(Q2) = colnames(T2) = colnames(c.pred) = colnames(model$loadings)
-   pres = pcares(NULL, NULL, NULL, model$calres$totvar, model$tnorm, model$ncomp.selected, T2, Q2)
+   rownames(Q) = rownames(T2) = rownames(c.pred) = rownames(c.ref) = rownames(x)
+   colnames(Q) = colnames(T2) = colnames(c.pred) = colnames(model$loadings)
+   pres = pcares(NULL, NULL, NULL, model$calres$totvar, model$tnorm, model$ncomp.selected, T2, Q)
    cres = classres(c.pred, c.ref = c.ref)   
    res = simcares(pres, cres)
    
@@ -267,6 +364,7 @@ simca.crossval = function(model, x, cv, center = T, scale = F)
 #' @param ...
 #' other plot parameters (see \code{mdaplotg} for details)
 #' 
+#' @export
 plotModellingPower.simca = function(obj, ncomp = NULL, type = 'h', main = NULL, 
                                     xlab = 'Variables', ylab = '', ...)
 {
@@ -308,6 +406,7 @@ plotModellingPower.simca = function(obj, ncomp = NULL, type = 'h', main = NULL,
 #' @details
 #' See examples in help for \code{\link{simcam}} function.
 #' 
+#' @export
 plot.simca = function(x, ncomp = NULL, ...)
 {
    obj = x
@@ -324,9 +423,6 @@ plot.simca = function(x, ncomp = NULL, ...)
 
 #' Summary method for SIMCA model object
 #' 
-#' @method summary simca
-#' @S3method summary simca
-#'
 #' @description
 #' Shows performance statistics for the model.
 #' 
@@ -335,11 +431,11 @@ plot.simca = function(x, ncomp = NULL, ...)
 #' @param ...
 #' other arguments
 #' 
+#' @export
 summary.simca = function(object, ...)
 {
    obj = object
    
-   ncomp = obj$ncomp   
    cat(sprintf('\nSIMCA model for class "%s" summary\n\n', obj$classname))
    
    if (!is.null(obj$info))
@@ -388,9 +484,6 @@ summary.simca = function(object, ...)
 
 #' Print method for SIMCA model object
 #' 
-#' @method print simca
-#' @S3method print simca
-#'
 #' @description
 #' Prints information about the object structure
 #' 
@@ -399,6 +492,7 @@ summary.simca = function(object, ...)
 #' @param ...
 #' other arguments
 #' 
+#' @export
 print.simca = function(x, ...)
 {
    obj = x

@@ -1,29 +1,47 @@
-#  methods for classification results #
+#' Results of classification
+#' @description 
+#' \code{classres} is used to store results classification for one or multiple classes.
+#'
+#'      
+#' @param c.pred
+#' matrix with predicted values (+1 or -1) for each class.
+#' @param c.ref
+#' matrix with reference values for each class.
+#' @param p.pred
+#' matrix with probability values for each class.
+#' @param ncomp.selected
+#' vector with selected number of components for each class.
+#'
+#' @details 
+#' There is no need to create a \code{classres} object manually, it is created automatically when 
+#' build a classification model (e.g. using \code{\link{simca}} or \code{\link{plsda}}) or apply the 
+#' model to new data. For any classification method from \code{mdatools}, a class using to represent 
+#' results of classification (e.g. \code{\link{simcares}}) inherits fields and methods of 
+#' \code{classres}.
+#'
+#' @return
+#' \item{c.pred}{predicted class values (+1 or -1).}
+#' \item{c.ref}{reference (true) class values if provided.}
+#' 
+#' The following fields are available only if reference values were provided.
+#' \item{tp}{number of true positives.}
+#' \item{fp}{nmber of false positives.}
+#' \item{fn}{number of false negatives.}
+#' \item{specificity}{specificity of predictions.}
+#' \item{sensitivity}{sensitivity of predictions.}
+#'
+#' @seealso 
+#' Methods \code{classres} class:
+#' \tabular{ll}{
+#'  \code{\link{showPredictions.classres}} \tab shows table with predicted values.\cr
+#'  \code{\link{plotPredictions.classres}} \tab makes plot with predicted values.\cr
+#'  \code{\link{plotSensitivity.classres}} \tab makes plot with sensitivity vs. components values.\cr
+#'  \code{\link{plotSpecificity.classres}} \tab makes plot with specificity vs. components values.\cr
+#'  \code{\link{plotMisclassified.classres}} \tab makes plot with misclassified ratio values.\cr
+#'  \code{\link{plotPerformance.classres}} \tab makes plot with misclassified ration, specificity and sensitivity values.\cr
+#' }
 classres = function(c.pred, c.ref = NULL, p.pred = NULL, ncomp.selected = NULL)
 {
-   # Class for storing and visualising of classification results 
-   #
-   # Arguments:
-   #   c.pred: vector or matrix with predicted class
-   #   c.ref: vector with reference (true) class
-   #   p.pred: vector with predicted probabilities (or similar values) used for the classification decision
-   #   ncomp.selected: if c.pred calculated for different components, which to use as default
-   #
-   # Returns:
-   # a list (object of "classres" class) with following fields
-   #   c.pred: a matrix with predicted class
-   #   c.ref: a matrix with reference (true) class
-   #   p.pred: a matrix with predicted probabilities
-   #   tp: a matrix with true positives for each class and component
-   #   fp: a matrix with false positives for each class and component
-   #   fn: a matrix with false negatives for each class and component
-   #   specificity: a matrix with specificity values
-   #   sensitivity: a matrix with sensitivity values
-   #   misclassified: a matrix with misclassification rate values
-   #
-   # ncomp.selected is a vector with a value for each class
-   #
-
    if (!is.null(c.ref))
    {
       c.ref = as.matrix(c.ref)
@@ -83,6 +101,8 @@ getClassificationPerformance = function(c.ref, c.pred)
    tp = matrix(0, nrow = nclasses, ncol = ncomp)
    fp = matrix(0, nrow = nclasses, ncol = ncomp)
    fn = matrix(0, nrow = nclasses, ncol = ncomp)
+   tn = matrix(0, nrow = nclasses, ncol = ncomp)
+   
    specificity = matrix(0, nrow = nclasses + 1, ncol = ncomp)
    sensitivity = matrix(0, nrow = nclasses + 1, ncol = ncomp)
    misclassified = matrix(0, nrow = nclasses + 1, ncol = ncomp)
@@ -94,14 +114,15 @@ getClassificationPerformance = function(c.ref, c.pred)
       fn[i, ] = colSums((c.ref[, 1] == classnames[i]) & (c.pred[, , i, drop = F] == -1))
       fp[i, ] = colSums((c.ref[, 1] != classnames[i]) & (c.pred[, , i, drop = F] == 1))
       tp[i, ] = colSums((c.ref[, 1] == classnames[i]) & (c.pred[, , i, drop = F] == 1))
-
+      tn[i, ] = colSums((c.ref[, 1] != classnames[i]) & (c.pred[, , i, drop = F] == -1))
+      
       sensitivity[i, ] = tp[i, ] / (tp[i, ] + fn[i, ])
-      specificity[i, ] = tp[i, ] / (tp[i, ] + fp[i, ])
+      specificity[i, ] = tn[i, ] / (tn[i, ] + fp[i, ])
       misclassified[i, ] = (fp[i, ] + fn[i, ]) / nobj
    }
 
    sensitivity[nclasses + 1, ] = colSums(tp) / (colSums(tp) + colSums(fn))
-   specificity[nclasses + 1, ] = colSums(tp) / (colSums(tp) + colSums(fp))
+   specificity[nclasses + 1, ] = colSums(tn) / (colSums(tn) + colSums(fp))
    misclassified[nclasses + 1, ] = (colSums(fp) + colSums(fn)) / (nclasses * nobj)
 
    rownames(fn) = rownames(fp) = rownames(tp) = dimnames(c.pred)[[3]]
@@ -112,6 +133,7 @@ getClassificationPerformance = function(c.ref, c.pred)
    obj$fn = fn
    obj$fp = fp
    obj$tp = tp
+   obj$tn = tn
    obj$sensitivity = sensitivity
    obj$specificity = specificity
    obj$misclassified = misclassified
@@ -165,6 +187,7 @@ getSelectedComponents.classres = function(obj, ncomp = NULL)
 #' The function prints a matrix where every column is a class and every row is an data object.
 #' The matrix has either -1 (does not belong to the class) or +1 (belongs to the class) values.
 #' 
+#' @export
 showPredictions.classres = function(obj, ncomp = NULL, ...)
 {
    ncomp = getSelectedComponents.classres(obj, ncomp)
@@ -204,6 +227,7 @@ showPredictions.classres = function(obj, ncomp = NULL, ...)
 #' @details
 #' See examples in description of \code{\link{plsdares}}, \code{\link{simcamres}}, etc.
 #' 
+#' @export
 plotSensitivity.classres = function(obj, nc = NULL, ...)
 {
    plotPerformance(obj, nc = nc, param = 'sensitivity', ...)
@@ -225,6 +249,7 @@ plotSensitivity.classres = function(obj, nc = NULL, ...)
 #' @details
 #' See examples in description of \code{\link{plsdares}}, \code{\link{simcamres}}, etc.
 #' 
+#' @export
 plotSpecificity.classres = function(obj, nc = NULL, ...)
 {
    plotPerformance(obj, nc = nc, param = 'specificity', ...)
@@ -246,6 +271,7 @@ plotSpecificity.classres = function(obj, nc = NULL, ...)
 #' @details
 #' See examples in description of \code{\link{plsdares}}, \code{\link{simcamres}}, etc.
 #' 
+#' @export
 plotMisclassified.classres = function(obj, nc = NULL, ...)
 {
    plotPerformance(obj, nc = nc, param = 'misclassified', ...)
@@ -283,6 +309,7 @@ plotMisclassified.classres = function(obj, nc = NULL, ...)
 #' @details
 #' See examples in description of \code{\link{plsdares}}, \code{\link{simcamres}}, etc.
 #' 
+#' @export
 plotPerformance.classres = function(obj, nc = NULL, param = 'all', type = 'h', legend = NULL, 
                                     main = NULL, xlab = 'Components', 
                                     ylab = '', ylim = c(0, 1.1), ...)
@@ -363,6 +390,7 @@ plotPerformance.classres = function(obj, nc = NULL, param = 'all', type = 'h', l
 #' @details
 #' See examples in description of \code{\link{plsdares}}, \code{\link{simcamres}}, etc.
 #' 
+#' @export
 plotPredictions.classres = function(obj, nc = NULL, ncomp = NULL, type = 'p', legend = NULL, 
                                     main = NULL, xlab = 'Objects', ylab = NULL, ylim = c(-1.2, 1.2),
                                     ...)
@@ -475,6 +503,7 @@ plotPredictions.classres = function(obj, nc = NULL, ncomp = NULL, type = 'p', le
 #' @param ...
 #' other arguments
 #' 
+#' @export
 plot.classres = function(x, nc = NULL, ...)
 {
    plotPredictions.classres(x, nc = nc, ...)
@@ -482,9 +511,6 @@ plot.classres = function(x, nc = NULL, ...)
 
 #' as.matrix method for classification results
 #' 
-#' @method as.matrix classres
-#' @S3method as.matrix classres
-#'
 #' @description
 #' Generic \code{as.matrix} function for classification results. Returns matrix with performance 
 #' values for specific class.
@@ -498,6 +524,7 @@ plot.classres = function(x, nc = NULL, ...)
 #' @param ...
 #' other arguments
 #' 
+#' @export
 as.matrix.classres = function(x, ncomp = NULL, nc = 1, ...)
 {
    obj = x
@@ -505,13 +532,14 @@ as.matrix.classres = function(x, ncomp = NULL, nc = 1, ...)
    if (!is.null(obj$c.ref))
    {  
       if (is.null(ncomp))
-         res = cbind(obj$tp[nc, ], obj$fp[nc, ], obj$fn[nc, ], obj$specificity[nc, ], obj$sensitivity[nc, ])
+         res = cbind(obj$tp[nc, ], obj$fp[nc, ], obj$tn[nc, ], obj$fn[nc, ], 
+                     obj$specificity[nc, ], obj$sensitivity[nc, ])
       else
-         res = cbind(obj$tp[nc, ncomp], obj$fp[nc, ncomp], obj$fn[nc, ncomp], 
+         res = cbind(obj$tp[nc, ncomp], obj$fp[nc, ncomp], obj$tn[nc, ncomp], obj$fn[nc, ncomp], 
                      round(obj$specificity[nc, ncomp], 3), round(obj$sensitivity[nc, ncomp], 3))
 
    res[, 4:5] = round(res[, 4:5], 3)
-   colnames(res) = c('TP', 'FP', 'FN', 'Spec', 'Sens')
+   colnames(res) = c('TP', 'FP', 'TN', 'FN', 'Spec', 'Sens')
    }
    else
    {
@@ -522,9 +550,6 @@ as.matrix.classres = function(x, ncomp = NULL, nc = 1, ...)
 }
 
 #' Print information about classification result object
-#' 
-#' @method print classres
-#' @S3method print classres
 #' 
 #' @description
 #' Generic \code{print} function for classification results. Prints information about major fields
@@ -537,6 +562,7 @@ as.matrix.classres = function(x, ncomp = NULL, nc = 1, ...)
 #' @param ...
 #' other arguments
 #' 
+#' @export
 print.classres = function(x, str = NULL, ...)
 {
    if (is.null(str))
@@ -560,9 +586,6 @@ print.classres = function(x, str = NULL, ...)
 
 #' Summary statistics about classification result object
 #' 
-#' @method summary classres
-#' @S3method summary classres
-#' 
 #' @description
 #' Generic \code{summary} function for classification results. Prints performance values for the 
 #' results.
@@ -577,6 +600,7 @@ print.classres = function(x, str = NULL, ...)
 #' @param ...
 #' other arguments
 #' 
+#' @export
 summary.classres = function(object, ncomp = NULL, nc = NULL, ...)
 {
    cat('\nClassiciation results (class classres) summary\n')
