@@ -10,7 +10,7 @@ This package contains classes and functions for most common methods used in Chem
 }
 
 \details{
-The porject is hosted on GitHub, there you can find a short Wiki tutorial (https://github.com/svkucheryavski/mdatools/wiki) explaining most important features of the package.
+The porject is hosted on GitHub, there you can also find a Bookdown user tutorial (https://svkucheryavski.github.io/mdatools/) explaining most important features of the package.
 
 Every method is represented by two classes: a model class for keeping all parameters and information about the model, and a class for keeping and visualising results of applying the model to particular data values.
 

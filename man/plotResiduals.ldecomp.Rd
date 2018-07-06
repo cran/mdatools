@@ -5,8 +5,7 @@
 \title{Residuals plot for linear decomposition}
 \usage{
 \method{plotResiduals}{ldecomp}(obj, ncomp = NULL, main = NULL,
-  xlab = "T2", ylab = "Squared residual distance (Q)", show.labels = F,
-  show.limits = T, ...)
+  xlab = NULL, ylab = NULL, show.labels = F, ...)
 }
 \arguments{
 \item{obj}{object of \code{ldecomp} class.}
@@ -21,11 +20,8 @@
 
 \item{show.labels}{logical, show or not labels for the plot objects}
 
-\item{show.limits}{logical, show or not lines for statistical limits of the residuals}
-
 \item{...}{most of graphical parameters from \code{\link{mdaplot}} function can be used.}
 }
 \description{
 Shows a plot with T2 vs Q values for data objects.
 }
-

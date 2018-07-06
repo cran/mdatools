@@ -12,7 +12,7 @@ mdaplot(data = NULL, plot.data = NULL, type = "p", pch = 16,
   xticks = NULL, yticks = NULL, xticklabels = NULL, yticklabels = NULL,
   xlas = 0, ylas = 0, lab.col = "darkgray", lab.cex = 0.65,
   show.excluded = FALSE, col.excluded = "#E0E0E0", nbins = 256,
-  colramp = mdaplot.getColors, force.x.values = NA, ...)
+  colramp = mdaplot.getColors, force.x.values = NA, opacity = 1, ...)
 }
 \arguments{
 \item{data}{a vector, matrix or a data.frame with data values.}
@@ -78,11 +78,14 @@ by a user (if NULL it will be created automatically)}
 
 \item{col.excluded}{color for the excluded objects (rows)}
 
-\item{nbins}{if scatter density plot is shown, number of segments to split the plot area into (see also ?smoothScatter)}
+\item{nbins}{if scatter density plot is shown, number of segments to split the plot area into 
+(see also ?smoothScatter)}
 
 \item{colramp}{Colramp function for density scatter plot}
 
 \item{force.x.values}{vector with corrected x-values for a bar plot (do not specify this manually)}
+
+\item{opacity}{opacity for plot colors (value between 0 and 1)}
 
 \item{...}{other plotting arguments.}
 }
@@ -94,9 +97,16 @@ Most of the parameters are similar to what are used with standard \code{plot} fu
 differences are described below.
   
 The function makes a plot of one set of objects. It can be a set of points (scatter plot), 
-bars, lines, scatter-lines, errorbars og an image. The data is organized as a data frame, matrix or vector. 
-For scatter and only first two columns will be used, for bar plot only values from the first row.
+bars, lines, scatter-lines, errorbars og an image. The data is organized as a data frame, 
+matrix or vector. For scatter and only first two columns will be used, for bar plot only 
+values from the first row. It is recommended to use \code{\link{mda.subset}} method if plot 
+should be made only for a subset of the data, especially if you have any excluded rows or 
+columns or other special attributed, described in the Bookdown tutorial.
 
+If data is a data frame and contains one or more factors, they will be converted to a dummy
+variables (using function \code{\link{mda.df2mat}}) and appears at the end (last columns) if 
+line or bar plot is selected.
+ 
 The function allows to colorize lines and points according to values of a parameter 
 \code{cgroup}. The parameter must be a vector with the same elements as number of objects (rows)
 in the data. The values are divided into up to eight intervals and for each interval a 
@@ -116,10 +126,9 @@ y axis, see Bookdown tutorial for more details.
 # See all examples in the tutorial.
 
 }
-\author{
-Sergey Kucheryavskiy (svkucheryavski@gmail.com)
-}
 \seealso{
 \code{\link{mdaplotg}} - to make plots for several sets of data objects (groups of objects).
 }
-
+\author{
+Sergey Kucheryavskiy (svkucheryavski@gmail.com)
+}

@@ -1,3 +1,39 @@
+v.0.9.1
+=======
+* all plot functions have new `opacity` parameter for semi-transparent colors
+* several improvements to PLS-DA method for one-class discrimination
+* fixed a bug with wrong estimation of maximum number of components for PCA/SIMCA with cross-validation
+* added chapter on PLS-DA to the tutorial (including last improvements)
+
+v.0.9.0
+=======
+* added randomized PCA algorithm (efficient for datasets with large number of rows)
+* added option to inherit and show critical limits on residuals plot for PCA/SIMCA results
+* added support for data driven approach to PCA/SIMCA (DD-SIMCA)
+* added calculation of class belongings probability for SIMCA results
+* added `plotExtreme()` method for SIMCA models
+* added `setResLimits()` method for PCA/SIMCA models
+* added `plotProbabilities()` method for SIMCA results
+* added `getConfusionMatrix()` method for classification results  
+* added option to show prediction statistics using `plotPrediction()` for PLS results
+* added option to use equal axes limits in `plotPrediction()` for PLS results
+* the tutorial has been amended and extended correspondingly
+
+v.0.8.4
+=======
+* small improvements to calculation of statistics for regression coefficients
+* `pls.getRegCoeffs()` now also returns standard error and confidence intervals calculated for unstandardized variables
+* new method `summary()` for object with regression coefficients (`regcoeffs`)
+* fixed a bug with double labels on regression coefficients plot with confidence intervals 
+* fixed a bug in some PLS plots where labels for cross-validated results forced to be numbers 
+* when using `mdaplot` for data frame with one or more factor columns, the factors are now transofrmed to dummy variables (before it led to an error) 
+
+v.0.8.3
+=======
+* fixed a bug in `mdaplots` when using factor with more than 8 levels for color grouping led to an error
+* fixed a bug in `pca` with wrong calculation of eigenvalues in NIPALS algorithm
+* bars on a bar plot now can be color grouped
+
 v.0.8.2
 =======
 * parameters `lab.cex` and `lab.col` now are also applied to colorbar labels
@@ -88,7 +124,7 @@ v. 0.5.0
 * all documentation has been rewritten using `roxygen2` package
 * added extra preprocessing methods
 * added VIP scores calculation and plot for PLS and PLS-DA models
-* addec Selectivity ratio calculation and plot for PLS and PLS-DA models
+* added Selectivity ratio calculation and plot for PLS and PLS-DA models
 * added calculation of confidence intervals for PLS regression coefficient using jack-knife
 * bug fixes and small improvements
 * the first release available in CRAN

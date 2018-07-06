@@ -5,7 +5,8 @@
 \title{Regression coefficients plot}
 \usage{
 \method{plot}{regcoeffs}(x, ncomp = 1, ny = 1, type = NULL, col = NULL,
-  main = NULL, ylab = NULL, show.line = T, show.ci = T, ...)
+  main = NULL, ylab = NULL, show.line = T, show.ci = T, alpha = 0.05,
+  ...)
 }
 \arguments{
 \item{x}{regression coefficients object (class \code{regcoeffs})}
@@ -26,9 +27,10 @@
 
 \item{show.ci}{logical, show or not confidence intervals if they are available}
 
+\item{alpha}{significance level for confidence intervals (a number between 0 and 1, e.g. for 95\% alpha = 0.05)}
+
 \item{...}{other arguments}
 }
 \description{
 Shows plot with regression coefficient values for every predictor variable (x)
 }
-
