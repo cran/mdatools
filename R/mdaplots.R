@@ -430,8 +430,7 @@ mdaplot.showLabels = function(x.values, y.values, labels, pos = 3,
    if (is.numeric(labels))
       labels = mdaplot.formatValues(labels)
    
-   if (!any(is.nan(x.values) || is.nan(y.values))) {
-      
+   if (!( any(is.nan(x.values)) || any(is.nan(y.values)) )) {
       if (!is.null(type) && type == 'h') {   
          # show labels properly for bars with positive and negative values
          neg = y.values < 0
@@ -1216,6 +1215,7 @@ mdaplot = function(data = NULL, plot.data = NULL, type = 'p', pch = 16, col = NU
    # show colorbar if needed
    if (!is.null(cgroup) && show.colorbar == T)
       mdaplot.showColorbar(cgroup, colmap, lab.col = lab.col, lab.cex = lab.cex)   
+   
 }
 
 #' Plotting function for several sets of objects

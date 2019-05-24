@@ -43,6 +43,8 @@
 #'  \code{\link{plotPerformance.classres}} \tab makes plot with misclassified ration, specificity 
 #'  and sensitivity values.\cr
 #' }
+#' 
+#' @export
 classres = function(c.pred, c.ref = NULL, p.pred = NULL, ncomp.selected = NULL) {
    if (!is.null(c.ref)) {
       attrs = mda.getattr(c.ref)
@@ -206,7 +208,7 @@ getConfusionMatrix.classres = function(obj, ncomp = NULL, ...) {
    # get class names and numbers
    classes = dimnames(obj$c.pred)[[3]]
    nclasses = length(classes)
-   ref.classes = unique(obj$c.ref)
+   ref.classes = levels(as.factor(obj$c.ref))
    ref.nclasses = length(ref.classes)
    
    # compute the confusion matrix
