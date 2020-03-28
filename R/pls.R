@@ -267,7 +267,7 @@ pls <- function(x, y, ncomp = min(nrow(x) - 1, ncol(x), 20), center = TRUE, scal
    }
 
    # build a model and apply to calibration set
-   model <- pls.cal(x, y, ncomp, center = center, scale = scale, method = method)
+   model <- pls.cal(x, y, ncomp, center = center, scale = scale, method = method, cv = cv)
    model$info <- info
    model$call <- match.call()
 
@@ -708,8 +708,8 @@ predict.pls <- function(object, x, y = NULL, cv = FALSE, ...) {
 #' @export
 categorize.pls <- function(obj, res = obj$res$cal, ncomp = obj$ncomp.selected, ...) {
 
-   create_categories <- function(nobj, extremes_ind, outliers_ind) {
-      categories <- rep(1, nobj)
+   create_categories <- function(extremes_ind, outliers_ind) {
+      categories <- rep(1, length(extremes_ind))
       categories[extremes_ind] <- 2
       categories[outliers_ind] <- 3
       return(factor(categories, levels = 1:3, labels = c("regular", "extreme", "outlier")))
@@ -757,7 +757,7 @@ categorize.pls <- function(obj, res = obj$res$cal, ncomp = obj$ncomp.selected, .
    # compute total distance and DoF for it
    g <- Nh * h / h0 + Nq * q / q0 + Nz * z / z0
    Ng <- Nh + Nq + Nz
-   nobj <- length(g)
+   nobj <- nrow(obj$res$cal$xdecomp$scores)
 
    # compute limits for total distance
    ext_lim <- qchisq(1 - obj$alpha, Ng)
@@ -765,7 +765,8 @@ categorize.pls <- function(obj, res = obj$res$cal, ncomp = obj$ncomp.selected, .
 
    outliers_ind <- g > out_lim
    extremes_ind <- g > ext_lim & g < out_lim
-   return(create_categories(nobj, extremes_ind, outliers_ind))
+
+   return(create_categories(extremes_ind, outliers_ind))
 }
 
 #' Summary method for PLS model object
@@ -1501,8 +1502,18 @@ pls.simpls <- function(x, y, ncomp, cv = FALSE) {
 
       # calculate and store weights
       w <- A %*% q
-      c <- crossprod(w, (M %*% w))
-      w <- w / sqrt(as.numeric(c))
+      c <- as.numeric(crossprod(w, (M %*% w)))
+
+      # stop cycle since c-value is very small and can result in singular matrix
+      if (!cv && c < 2 * .Machine$double.eps) {
+         n <- n - 1
+         warning(paste0(
+            "PLS can not compute more than ", n, " components (eigenvalues are too small)."
+         ), call. = FALSE)
+         break
+      }
+
+      w <- w / sqrt(c)
       W[, n] <- w
 
       # calculate and store x loadings
@@ -1523,11 +1534,6 @@ pls.simpls <- function(x, y, ncomp, cv = FALSE) {
       C <- C - tcrossprod(v)
       M <- M - tcrossprod(p)
       A <- C %*% A
-
-      if (!cv && max(e$values) < 10 * .Machine$double.eps) {
-         # stop cycle is egienvalue is almost zero
-         break
-      }
    }
 
    # truncate results if n is smaller than ncomp
@@ -1557,7 +1563,7 @@ pls.simpls <- function(x, y, ncomp, cv = FALSE) {
 #' @param method
 #' algorithm for computing PLS model (only 'simpls' is supported so far)
 #' @param cv
-#' logical, is model calibrated during cross-validation or not
+#' logical, is model calibrated during cross-validation or not (or cv settings for calibration)
 #'
 #' @return model
 #' an object with calibrated PLS model
@@ -1652,22 +1658,26 @@ pls.cal <- function(x, y, ncomp, center, scale, method = "simpls", cv = FALSE) {
 
    # find maximum number of objects in a segment
    nobj.cv <- 0
-   if (!is.logical(cv)) {
+   if (!is.logical(cv) && !is.null(cv)) {
       nseg <- if (is.numeric(cv)) cv else cv[[2]]
       nobj.cv <- if (nseg == 1) 1 else ceiling(xc.nrows / nseg)
+
+      # we set cv to FALSE so fitting knows that it is not a part of cross-validation
+      cv <- FALSE
    }
+
+   # set cv to FALSE also if it was null (needed for correct call of pls.run() method)
+   if (is.null(cv)) cv <- FALSE
 
    # correct maximum number of components
    ncomp <- min(xc.ncols, xc.nrows - 1 - nobj.cv, ncomp)
 
    # fit model
-
-   fit <- pls.run(x, y, method = method, ncomp = ncomp)
-   ncomp <- fit$ncomp
-   model$ncomp <- ncomp
+   fit <- pls.run(x, y, method = method, ncomp = ncomp, cv = cv)
+   model$ncomp <- ncomp <- fit$ncomp
 
    # if it is for cross-validation return the results as is
-   if (cv) {
+   if (is.logical(cv) && cv) {
       model$coeffs <- regcoeffs(fit$coeffs)
       model$xloadings <- fit$xloadings
       model$weights <- fit$weights
