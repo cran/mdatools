@@ -1,7 +1,7 @@
-603a83dd59efc4590a90f0dfe9149904 *DESCRIPTION
+e2520194c5ac2e4ec67ee0317d251e85 *DESCRIPTION
 3cf8a5dd07c9876f319fc304ebf0b922 *LICENSE
 ca6cefc27f3f3198b596d5f5c974fa42 *NAMESPACE
-2411dcd95ef681464f6c66569ad91d1d *NEWS.md
+14a84d9b7a2ca859721ad1fd6560d403 *NEWS.md
 18389fc5d6bc9e8d77cebb4a9ced5bc4 *R/classmodel.R
 656d8e4c2bd91ad051f348e680ab49d6 *R/classres.R
 3f66f8b3c358eb6dc7ce3d3cb27e925a *R/constraints.R
@@ -11,7 +11,7 @@ ca6cefc27f3f3198b596d5f5c974fa42 *NAMESPACE
 5605a2f05279c4a4ea5415b42554716a *R/ldecomp.R
 cf8bfb2ebe604a580ad17554ddf7a1a3 *R/mcr.R
 c9a614ed194208045669af22e9c51f52 *R/mcrals.R
-a976c3c3bb0629bed9af5ec5285bcd1f *R/mcrpure.R
+21fd3541321b5d8817d5c1dc401362bc *R/mcrpure.R
 91e521e58f1c3d95511e552047570684 *R/mdaplot.R
 59a3d05a5b2f841e51cfc3aeb4008afa *R/mdaplotg.R
 c6f4c27fe156cf7e1f4601498d0a2a75 *R/misc.R
@@ -31,7 +31,7 @@ d476b457870aa091fc96137dc8530529 *R/simca.R
 68ea35df6ebf95696e572bc95ab62cbd *R/simcam.R
 f816ec210f044eb44808c126ed5c8697 *R/simcamres.R
 9b241e8773048b0cf1c991c4d4023fe7 *R/simcares.R
-dfd083ef019fc43492f429ef897ca415 *README.md
+e4a370d9ed50365f71e07fcfd85fddb2 *README.md
 31127cc9512b97f3ad4fbbb79f44c3c9 *data/carbs.RData
 05f86d09f47bb7a9721fe816fd090188 *data/pellets.RData
 2b88d55f77aa9213175d624e4aab5c06 *data/people.RData
@@ -106,7 +106,7 @@ b349d5a5b7b9e83f31c9882e12d4005d *man/getLabelsAsValues.Rd
 5169f8321433b505af095d883b13f77c *man/getProbabilities.Rd
 e0fd709e747dc7334365cf6e25b31178 *man/getProbabilities.pca.Rd
 9da09acb2a6b0cb8f14abec178c38cdf *man/getProbabilities.simca.Rd
-f9a2bec6413317baf543ccf095b37492 *man/getPureVariables.Rd
+51efb176aafc1e34fc2720400530d5de *man/getPureVariables.Rd
 b79f31c936f9382d82183c564e82290d *man/getRegcoeffs.Rd
 fae538f4cbf92a0bad23777cb5470057 *man/getRegcoeffs.regmodel.Rd
 4d00b10c9188da7a5ff0eb0f2877c9d3 *man/getRes.Rd
@@ -138,7 +138,7 @@ ee918fcd7c01ad0012eb433f75edd62a *man/mcrals.cal.Rd
 0753d2c036936fa9804dd4b2b5ac6b5c *man/mcrals.fcnnls.Rd
 ede97b3d6f80c95fe78c98bb04655e9f *man/mcrals.nnls.Rd
 728ed0ad8376afa86d84b569d8f33fd1 *man/mcrals.ols.Rd
-af2fabd6a491758ad8fd59203233ee76 *man/mcrpure.Rd
+07c6ce0254578b350deeacf08d53bcd5 *man/mcrpure.Rd
 0210a08455ad7f01fd945b0366460863 *man/mda.cbind.Rd
 7447c67a785a5d4d6dc0ddb8f0a2336f *man/mda.data2im.Rd
 d3d7b4492b47b1e8fcde03a5a4a8830c *man/mda.df2mat.Rd
@@ -434,12 +434,11 @@ ed2ea8307ac9cd447df91fac1e181678 *tests/testthat/test-constraints.R
 ff8621f99cd1016e5dba4ea367cea073 *tests/testthat/test-ldecomp.R
 94f44131e9ceeaa66aff1b6aca875c34 *tests/testthat/test-ldecomplimits.R
 c6fcff3338a7b29c1b96a3efb6d3777d *tests/testthat/test-ldecompplots.R
-04b7d1fb51cc39baca2cf01e25d3e351 *tests/testthat/test-mcrpure.R
+946621a960fa1106a9853fadf3fed033 *tests/testthat/test-mcrpure.R
 7eef38f2248377bd527e1568411713f1 *tests/testthat/test-mdaplot1.R
 698ddb5e7b9952c7429fc8ac194024db *tests/testthat/test-mdaplot2.R
 e79d5cb7860ff15f25e1b2697a492b27 *tests/testthat/test-mdaplotg.R
 d28bfa9209a0d0fb3df4e96f0a3a4f65 *tests/testthat/test-mdaplotyy.R
-8e30ebc63de92194653fdcbe507b4cc3 *tests/testthat/test-misc.R
 e45397faa692dcea4c297b3243d61f55 *tests/testthat/test-pca.R
 009e6bcbb56154dc05ef2da9c5e74264 *tests/testthat/test-pcaplots.R
 816b28d6de6f17532f6a86381dd849a3 *tests/testthat/test-pcaresplots.R
