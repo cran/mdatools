@@ -1,7 +1,7 @@
 Package: mdatools
 Title: Multivariate Data Analysis for Chemometrics
-Version: 0.11.5
-Date: 2021-04-26
+Version: 0.12.0
+Date: 2021-09-12
 Author: Sergey Kucheryavskiy (<https://orcid.org/0000-0002-3145-7244>)
 Maintainer: Sergey Kucheryavskiy <svkucheryavski@gmail.com>
 Description: Projection based methods for preprocessing,
@@ -13,7 +13,7 @@ Imports: methods, graphics, grDevices, stats, Matrix
 RoxygenNote: 7.1.1
 Suggests: testthat
 NeedsCompilation: no
-Packaged: 2021-04-26 11:17:11 UTC; sergeykucheryavskiy
+Packaged: 2021-09-13 06:59:26 UTC; sergeykucheryavskiy
 Depends: R (>= 3.5.0)
 Repository: CRAN
-Date/Publication: 2021-04-30 08:50:08 UTC
+Date/Publication: 2021-09-13 07:40:02 UTC
