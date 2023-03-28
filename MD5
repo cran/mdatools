@@ -1,11 +1,11 @@
-226122f8cb2c65060db179127ce19a3a *DESCRIPTION
+daec75a61a9bffe520973f8187179afc *DESCRIPTION
 3cf8a5dd07c9876f319fc304ebf0b922 *LICENSE
-1cf1491f645158ba1ab6d53a4d3bbb5d *NAMESPACE
-0b2237b76fef948c0f724ac2b43b159b *NEWS.md
+86a3b8ef6466107e57d2d47a361e1780 *NAMESPACE
+8974fff68c4aaf338cd5b91dc467032a *NEWS.md
 18389fc5d6bc9e8d77cebb4a9ced5bc4 *R/classmodel.R
 fe50ff67350201cbfdfccbfc31f374a8 *R/classres.R
 d6629bca910074900b21c72cdf9d2493 *R/constraints.R
-90031295c35a43b45fd68b2a8670ee21 *R/crossval.R
+6c0dbca8fe3ae7c594f006b3a3d42c08 *R/crossval.R
 7316f4977f66156ddda4bd414b15fdf4 *R/defaults.R
 489d52204e8bcd82c8cd4bd9eb498e27 *R/ipls.R
 9850120a7e5fae64fb93912fc832b324 *R/ldecomp.R
@@ -17,13 +17,12 @@ afb8fa6cd0340d6a6338e3169467221a *R/mcrpure.R
 8fdce3303ce2aa3b27b78dd05a820dd7 *R/misc.R
 c0a86f3850417aca8af8f0e1c14f1a18 *R/pca.R
 e3c36dda4c89fd5b3664fba64a5e215e *R/pcares.R
-4d99390c68adc0c5e365181d4d97779b *R/pcv.R
 d9c109bfe5535cb13eb0d0acb9a1b336 *R/plotseries.R
 73ae0ed21d704619819609987297535b *R/pls.R
 bbf71a1c47780a83d55216d9078f83ad *R/plsda.R
 17bfd31727e2c49eb1b2dde9a0841edc *R/plsdares.R
 0cbec8f6d5dc94f2594bfa891c0c134d *R/plsres.R
-b31332d2055127c70af0d9816a5559cd *R/prep.R
+2da4c3b6cda92e90485aec08f3112858 *R/prep.R
 84d7b8c0d5094857d8e4a463b4a332f8 *R/randtest.R
 05b77a3c2da3ae0a27a2c86d5fe3140a *R/regcoeffs.R
 067e9aa155057a102635e06424e83324 *R/regmodel.R
@@ -31,7 +30,7 @@ b31332d2055127c70af0d9816a5559cd *R/prep.R
 7c527d107ab9a6a272270ad281c07d38 *R/simca.R
 76216aff8570918a08ee60fff77785f6 *R/simcam.R
 f816ec210f044eb44808c126ed5c8697 *R/simcamres.R
-9b241e8773048b0cf1c991c4d4023fe7 *R/simcares.R
+770466d41e0ffd4d47351b7aa07ebcb9 *R/simcares.R
 92fa1f93dd3340a2677da6ae6b93c0f0 *README.md
 31127cc9512b97f3ad4fbbb79f44c3c9 *data/carbs.RData
 05f86d09f47bb7a9721fe816fd090188 *data/pellets.RData
@@ -77,7 +76,6 @@ a88d516c5771b7253de5321fbe8765b9 *man/ddrobust.param.Rd
 7b408f0e6a06ed1b8909703b1237de53 *man/ellipse.Rd
 22b52280ea4483da9dbdc442ebcb4c24 *man/employ.constraint.Rd
 a532c5aba155ce6a51c885f2ee4a1d98 *man/employ.prep.Rd
-3ec4eaead99adf0bc4add8b708f41e80 *man/eye.Rd
 5b04406d58207d5e7ef1cc064a7f905a *man/fprintf.Rd
 94c9aeea5ea4e6df68d1e8c2d51594f0 *man/getCalibrationData.Rd
 ab464c3e5a81a48c0c0ca6aef5999e35 *man/getCalibrationData.pca.Rd
@@ -97,7 +95,6 @@ b349d5a5b7b9e83f31c9882e12d4005d *man/getLabelsAsValues.Rd
 e0fd709e747dc7334365cf6e25b31178 *man/getProbabilities.pca.Rd
 9da09acb2a6b0cb8f14abec178c38cdf *man/getProbabilities.simca.Rd
 51efb176aafc1e34fc2720400530d5de *man/getPureVariables.Rd
-f8838e4b732869ee344a1724b0acdce1 *man/getR.Rd
 b79f31c936f9382d82183c564e82290d *man/getRegcoeffs.Rd
 fae538f4cbf92a0bad23777cb5470057 *man/getRegcoeffs.regmodel.Rd
 4d00b10c9188da7a5ff0eb0f2877c9d3 *man/getRes.Rd
@@ -171,7 +168,7 @@ a0c5ede22c0045e0c85d6ed6b313fcb8 *man/mdaplotg.prepareData.Rd
 798face4900fc1069151a0f445674801 *man/mdaplotg.processParam.Rd
 a85112b10cb5e9023663394e6d0878fe *man/mdaplotg.showLegend.Rd
 ee7a874eeb5b0c4c3989b7b3dde9e610 *man/mdaplotyy.Rd
-8d6dfdbbd650851327d86750de7b648e *man/mdatools.Rd
+653e68e0242db3e548e02a03e4d17a09 *man/mdatools.Rd
 4e865d12b1f4108051af1ea2eeaad9e5 *man/pca.Rd
 823d200a28f9731d0fb7950c97e3c0cc *man/pca.cal.Rd
 068f42cce0a01a5b32aa53b69a08e9f6 *man/pca.getB.Rd
@@ -180,7 +177,6 @@ f0150368b1d51af2d41e1129a647b76c *man/pca.nipals.Rd
 86b98649f952c919fd272587471810b5 *man/pca.run.Rd
 fdbff5cae674e529668da8660238e54d *man/pca.svd.Rd
 21b68303ca8a9d41938775f442cea6c3 *man/pcares.Rd
-67c895f0d8b18e8cc81fc6f2835d8c3a *man/pcv.Rd
 85a857bd6ac951a82ccbb8097ab20aa4 *man/pellets.Rd
 8ef67199c66ddfc481ec15d6b4d54b94 *man/people.Rd
 11bfc0b415b9cd0e386f1f62f75a1dd1 *man/pinv.Rd
@@ -390,7 +386,6 @@ c13c2680cba58fef789e77d1afd81852 *man/regres.r2.Rd
 9fd8518b4c5fd638cbe28a27628a97f4 *man/regres.slope.Rd
 556f8008117a88b05c1e1e7644afeab7 *man/regress.addattrs.Rd
 943452cc01a8a4eabd6131c90bb3c2d1 *man/repmat.Rd
-682f7c803d366d901e6ae6be1216d466 *man/rotationMatrixToX1.Rd
 374400b5f15f589aa0fc6074e4c377a3 *man/selectCompNum.Rd
 58f05ffb5680260df155c5eb9a5c010a *man/selectCompNum.pca.Rd
 b94bf851b0db4e7a142f47c307461cc7 *man/selectCompNum.pls.Rd
