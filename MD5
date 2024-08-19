@@ -1,10 +1,10 @@
-53acf778357ec64ed507e986ace47cec *DESCRIPTION
+0c653fd0ac63a4fbe14864fd80203a00 *DESCRIPTION
 3cf8a5dd07c9876f319fc304ebf0b922 *LICENSE
 f07365d73a6343965a6a0decfcddd370 *NAMESPACE
-a54061511bc0db4f9b87514d9f170936 *NEWS.md
+3a02255e56d5d12464fb2dd40bdc9dab *NEWS.md
 18389fc5d6bc9e8d77cebb4a9ced5bc4 *R/classmodel.R
 fe50ff67350201cbfdfccbfc31f374a8 *R/classres.R
-d6629bca910074900b21c72cdf9d2493 *R/constraints.R
+c0684f0f6aa2b33aaea761257dfdac62 *R/constraints.R
 dea983feaac087c44fa0ec0e48f51728 *R/crossval.R
 e52ac3fc62e329ed376a2e797aea1064 *R/defaults.R
 a746741c759682fd84a603c4a1cb0312 *R/ipls.R
@@ -14,7 +14,7 @@ cf8bfb2ebe604a580ad17554ddf7a1a3 *R/mcr.R
 afb8fa6cd0340d6a6338e3169467221a *R/mcrpure.R
 6073c74ecf4e42e2da35a1a913caad92 *R/mdaplot.R
 559bb60d888e54aa80357e321886db9c *R/mdaplotg.R
-8fdce3303ce2aa3b27b78dd05a820dd7 *R/misc.R
+3b4ae4783977bbaba466d3839968c779 *R/misc.R
 2d2349def1e323045d3d1749fcc79930 *R/pca.R
 e3c36dda4c89fd5b3664fba64a5e215e *R/pcares.R
 d9c109bfe5535cb13eb0d0acb9a1b336 *R/plotseries.R
@@ -22,7 +22,7 @@ d9c109bfe5535cb13eb0d0acb9a1b336 *R/plotseries.R
 48bc871173b8c0ed386aa253c066e259 *R/plsda.R
 17bfd31727e2c49eb1b2dde9a0841edc *R/plsdares.R
 0cbec8f6d5dc94f2594bfa891c0c134d *R/plsres.R
-2da4c3b6cda92e90485aec08f3112858 *R/prep.R
+d84231a451679dc23be509e9599774cf *R/prep.R
 84d7b8c0d5094857d8e4a463b4a332f8 *R/randtest.R
 05b77a3c2da3ae0a27a2c86d5fe3140a *R/regcoeffs.R
 0704a401227a1e745b0fa33276dff023 *R/regmodel.R
@@ -31,7 +31,7 @@ d9c109bfe5535cb13eb0d0acb9a1b336 *R/plotseries.R
 4e0ba243846bca9c116531ea437c9afd *R/simcam.R
 f816ec210f044eb44808c126ed5c8697 *R/simcamres.R
 770466d41e0ffd4d47351b7aa07ebcb9 *R/simcares.R
-7d9ca053cb9415ce92181c050a5f8a12 *README.md
+0b28073be1c1606c2268fdcd0ccedf21 *README.md
 31127cc9512b97f3ad4fbbb79f44c3c9 *data/carbs.RData
 05f86d09f47bb7a9721fe816fd090188 *data/pellets.RData
 2b88d55f77aa9213175d624e4aab5c06 *data/people.RData
